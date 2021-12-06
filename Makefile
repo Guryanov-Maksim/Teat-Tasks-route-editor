@@ -8,3 +8,6 @@ install-deps:
 
 deploy:
 	git push heroku
+
+build:
+	NODE_ENV=production npx webpack
