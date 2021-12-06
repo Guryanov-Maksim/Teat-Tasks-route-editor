@@ -6,8 +6,5 @@ start:
 install-deps:
 	npm ci
 
-deploy:
-	git push heroku
-
 build:
 	NODE_ENV=production npx webpack
