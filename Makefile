@@ -5,3 +5,6 @@ start:
 
 install-deps:
 	npm ci
+
+deploy:
+	git push heroku
