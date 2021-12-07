@@ -14,7 +14,9 @@ const App = () => {
   return (
     <>
       <SendForm setInput={setInput} suggest={suggest} value={value} ymaps={ymaps} />
-      <YMaps>
+      <YMaps query={{
+        apikey: '48c83221-ea67-4ada-abb6-d05f32ffa30d',
+      }}>
         <div>
           My awesome application with maps!
           <Map
