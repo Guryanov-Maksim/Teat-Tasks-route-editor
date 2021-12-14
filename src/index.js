@@ -8,3 +8,6 @@ const run = () => {
 };
 
 run();
+
+// TODO
+// 1. Remove lodash

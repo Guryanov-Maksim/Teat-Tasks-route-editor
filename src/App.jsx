@@ -1,73 +1,31 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { YMaps, Map, Polyline, SearchControl } from 'react-yandex-maps';
+import React, { useState } from 'react';
+import { YMaps } from 'react-yandex-maps';
+import { Provider } from 'react-redux';
+
+import store from './store.js';
 import SendForm from './SendForm.jsx';
+import YandexMap from './features/map/Map.jsx';
 
 const App = () => {
-  const a = 1;
-  const [input, setInput] = useState();
-  const [suggest, setSuggest] = useState(null);
-  const [value, setValue] = useState();
-  // const [formikInstance, setFormik] = useState();
-  const [ymaps, setYmaps] = useState();
-  // const refFunc = (ref) => ref && ref.editor.startDrawing();
+  const [ymapsInstance, setYmapsInstance] = useState(null);
+  const [placemark, setPlacemark] = useState(null);
 
   return (
-    <>
-      <SendForm setInput={setInput} suggest={suggest} value={value} ymaps={ymaps} />
+    <Provider store={store}>
       <YMaps query={{
         apikey: '48c83221-ea67-4ada-abb6-d05f32ffa30d',
-      }}>
-        <div>
-          My awesome application with maps!
-          <Map
-            onLoad={(ymaps) => {
-              const suggest = new ymaps.SuggestView(input);
-              // console.log('sdfsdfsdfsdfsdf');
-              setYmaps(ymaps);
-              suggest.events.add('select', (e) => {
-                console.log(e.originalEvent.item.value);
-                // setSuggest(suggest);
-                // console.log(input.value);
-                // console.log(input);
-                setValue(e.get('item'));
-                // try {
-                // console.log(e);
-                // e.name = 'text';
-                // input.value = 'skdfjsdf';
-                // formikInstance.handleChange(e.originalEvent);
-                // setValue(e.originalEvent.item.value);
-                // } catch(e) {
-                //   console.error(e);
-                // }
-              }); // посмотреть, можно ли использовать e.get('domEvent')
-              // suggest.events.add('select', (e) => console.log(e.get('domEvent')));
-              // console.log(suggest.events);
-              // console.log(suggest.events.types);
-              // setSuggest(suggest);
-            }}
-            defaultState={{ center: [55.75, 37.57], zoom: 9 }}
-            modules={['geoObject.addon.editor', 'SuggestView', 'suggest', 'geocode']}
-          >
-            <Polyline
-              instanceRef={(ref) => ref && ref.editor.startDrawing()} // https://reactjs.org/docs/refs-and-the-dom.html#callback-refs   https://reactjs.org/docs/refs-and-the-dom.html#callback-refs
-              geometry={[
-                [55.8, 37.5],
-                [55.8, 37.4],
-                [55.7, 37.5],
-                [55.7, 37.4],
-              ]}
-              options={{
-                balloonCloseButton: true,
-                strokeColor: '#000',
-                strokeWidth: 4,
-                strokeOpacity: 0.5,
-                editorMaxPoints: 1,
-              }}
-            />
-          </Map>
-        </div>
+      }}
+      >
+        <SendForm
+          ymapsInstance={ymapsInstance}
+          placemark={placemark}
+        />
+        <YandexMap
+          setYmapsInstance={setYmapsInstance}
+          setPlacemark={setPlacemark}
+        />
       </YMaps>
-    </>
+    </Provider>
   );
 };
 

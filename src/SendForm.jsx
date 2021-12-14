@@ -1,98 +1,57 @@
-import React, { useEffect, useRef, useContext } from 'react';
-import { useFormik } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Form,
   Button,
   Row,
   Col,
 } from 'react-bootstrap';
-import { YMaps, Map, Polyline, SearchControl } from 'react-yandex-maps';
+import { withYMaps } from 'react-yandex-maps';
 import 'regenerator-runtime/runtime.js'; // установил, когда добавил async в handleSubmit, иначе появлялась ошибка, что import 'regenerator-runtime' не установлен
-// import { useSelector } from 'react-redux';
-// import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
-// import { selectCurrentChannelId } from '../channels/ChannelsSlice.jsx';
-// import { useApi, useAuth } from '../../hooks/index.js';
+import { addPlacemark, removePlacemark, addLocation } from './features/map/mapSlice.js';
 
-const SendForm = ({ setInput, suggest, value, setFormik, ymaps }) => {
-  // const currentChannelId = useSelector(selectCurrentChannelId);
+const coordMock = {
+  'Москва, Россия': [55.75, 37.57],
+  'Ростов-на-Дону, Россия': [47.222078, 39.720358],
+  'Самара, Россия': [53.195878, 50.100202],
+  'Волгоград, Россия': [48.707067, 44.516975],
+};
+
+const SendForm = ({ ymaps }) => {
   const inputRef = useRef();
-  // const context = useContext(YMaps);
-  // const { user: { username } } = useAuth();
-
-  // useEffect(() => {
-  //   inputRef.current.focus();
-  // }, [currentChannelId]);
+  const dispatch = useDispatch();
+  const [newPointCoords, setNewPointCoords] = useState();
 
   useEffect(() => {
     inputRef.current.focus();
-    setInput(inputRef.current);
+
+    const suggest = new ymaps.SuggestView(inputRef.current);
+    suggest.events.add('select', async (e) => {
+      console.log(e.originalEvent.item.displayName);
+      // const res = await ymaps.geocode(e.originalEvent.item.displayName);
+      // console.log(res.geoObjects.get(0).geometry.getCoordinates());
+      const coordinates = coordMock[e.originalEvent.item.displayName];
+      dispatch(addPlacemark(coordinates));
+      setNewPointCoords(coordinates);
+    });
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await ymaps.geocode(value);
-    console.log(res);
-    // const formData = new FormData(e.target);
-    // console.log(formData.get('text'));
-    // console.log(value);
+    dispatch(removePlacemark());
+    // const id = _.uniqueId();
+    dispatch(addLocation(newPointCoords));
   };
-
-  const formik = useFormik({
-    initialValues: {
-      text: '',
-    },
-    onSubmit: (values, actions) => {
-      console.log(values);
-      
-      // const message = {
-      //   text: values.text,
-      //   channelId: currentChannelId,
-      //   username,
-      // };
-      // const onSuccess = [
-      //   () => actions.resetForm(),
-      //   () => inputRef.current.focus(),
-      // ];
-      // const onFail = [
-      //   () => actions.setSubmitting(false),
-      //   () => inputRef.current.focus(),
-      // ];
-      // api.sendMessage(message, { onSuccess, onFail });
-    },
-  });
-
-  // useEffect(() => {
-  //   setFormik(formik);
-  // }, []);
-
-  // setFormik((e) => formik.handleChange(e));
 
   return (
     <div className="mt-auto px-5 py-3">
-      {/* <Form onSubmit={formik.handleSubmit}> */}
       <Form onSubmit={handleSubmit}>
         <Row>
           <Form.Group as={Col} sm>
             <Form.Control
               type="text"
               name="text"
-              // value={formik.values.text}
-              // onChange={(e) => {
-                // console.log(ymap);
-                // formik.handleChange(e);
-                // console.log(inputRef.current.value);
-                // console.log(formik.values.text);
-                // ymap.suggest(inputRef.current.value).then((items) => {
-                //   console.log(items);
-                // });
-                // console.log(suggest.events.select);
-                // console.log(formik.values.text);
-                // console.log(e.target.value);
-                // console.log(inputRef.current);
-                // console.log(e);
-                //  const suggest = new ymaps.SuggestView(inputRef.current);
-              // }}
               data-testid="new-message"
               placeholder="Введите новую точку"
               ref={inputRef}
@@ -109,4 +68,4 @@ const SendForm = ({ setInput, suggest, value, setFormik, ymaps }) => {
   );
 };
 
-export default SendForm;
+export default withYMaps(SendForm, true, []);
