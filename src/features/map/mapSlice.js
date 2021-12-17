@@ -20,11 +20,18 @@ export const counterSlice = createSlice({
       state.placemarkCoords = null;
     },
     updateLocation: (state, action) => {
-      const { index, newCoords } = action.payload;
-      state.points[index] = newCoords;
+      const { index, newCoords, newPointName } = action.payload;
+      state.points[index].coordinates = newCoords;
+      state.points[index].name = newPointName;
     },
     addLocation: (state, action) => {
       state.points.push(action.payload);
+    },
+    reorderPoints: (state, action) => {
+      state.points = action.payload;
+    },
+    removePoint: (state, action) => {
+      state.points.splice(action.payload, 1);
     },
   },
 });
@@ -35,6 +42,8 @@ export const {
   removePlacemark,
   addLocation,
   updateLocation,
+  reorderPoints,
+  removePoint,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

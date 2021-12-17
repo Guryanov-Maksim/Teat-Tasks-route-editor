@@ -4,11 +4,17 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { updateLocation } from './mapSlice.js';
 
+// const cityMock = {
+//   '1': 'Самара, Россия',
+//   'Волгоград, Россия': [48.707067, 44.516975],
+// };
+
 const YandexMap = ({ setYmapsInstance, setPlacemark }) => {
   const dispatch = useDispatch();
   const [polyline, setPolyline] = useState(null);
   const mapDefaultState = { center: [55.75, 37.57], zoom: 9 };
   const { placemarkCoords, mapState, points } = useSelector((state) => state.map);
+  const pointsCoordinates = points.map(({ coordinates }) => coordinates);
   // ymaps.setBounds(ref.geometry.getBounds());
 
   useEffect(() => {
@@ -17,7 +23,8 @@ const YandexMap = ({ setYmapsInstance, setPlacemark }) => {
         const vertexModel = e.get('vertexModel');
         const index = vertexModel._index;
         const newCoords = vertexModel.geometry._coordinates;
-        dispatch(updateLocation({ index, newCoords }));
+        const newPointName = 'Самара, Россия';
+        dispatch(updateLocation({ index, newCoords, newPointName }));
       });
     }
   }, [polyline]);
@@ -40,9 +47,9 @@ const YandexMap = ({ setYmapsInstance, setPlacemark }) => {
               ref.editor.startDrawing();
               setPolyline(ref);
             }} // https://reactjs.org/docs/refs-and-the-dom.html#callback-refs   https://reactjs.org/docs/refs-and-the-dom.html#callback-refs
-            geometry={points}
+            geometry={pointsCoordinates}
             options={{
-              balloonCloseButton: true,
+              // balloonCloseButton: true,
               strokeColor: '#000',
               strokeWidth: 4,
               strokeOpacity: 0.5,

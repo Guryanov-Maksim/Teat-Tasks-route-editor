@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store.js';
 import SendForm from './SendForm.jsx';
 import YandexMap from './features/map/Map.jsx';
+import Points from './points.jsx';
 
 const App = () => {
   const [ymapsInstance, setYmapsInstance] = useState(null);
@@ -24,6 +25,7 @@ const App = () => {
           setYmapsInstance={setYmapsInstance}
           setPlacemark={setPlacemark}
         />
+        <Points />
       </YMaps>
     </Provider>
   );

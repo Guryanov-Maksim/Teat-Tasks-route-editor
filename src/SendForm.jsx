@@ -8,6 +8,7 @@ import {
 import { withYMaps } from 'react-yandex-maps';
 import 'regenerator-runtime/runtime.js'; // установил, когда добавил async в handleSubmit, иначе появлялась ошибка, что import 'regenerator-runtime' не установлен
 import { useDispatch } from 'react-redux';
+import _ from 'lodash';
 
 import { addPlacemark, removePlacemark, addLocation } from './features/map/mapSlice.js';
 
@@ -21,7 +22,7 @@ const coordMock = {
 const SendForm = ({ ymaps }) => {
   const inputRef = useRef();
   const dispatch = useDispatch();
-  const [newPointCoords, setNewPointCoords] = useState();
+  const [pointData, setPointData] = useState();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -29,11 +30,12 @@ const SendForm = ({ ymaps }) => {
     const suggest = new ymaps.SuggestView(inputRef.current);
     suggest.events.add('select', async (e) => {
       console.log(e.originalEvent.item.displayName);
+      const name = e.originalEvent.item.displayName;
       // const res = await ymaps.geocode(e.originalEvent.item.displayName);
       // console.log(res.geoObjects.get(0).geometry.getCoordinates());
       const coordinates = coordMock[e.originalEvent.item.displayName];
       dispatch(addPlacemark(coordinates));
-      setNewPointCoords(coordinates);
+      setPointData({ coordinates, name });
     });
   }, []);
 
@@ -41,7 +43,8 @@ const SendForm = ({ ymaps }) => {
     e.preventDefault();
     dispatch(removePlacemark());
     // const id = _.uniqueId();
-    dispatch(addLocation(newPointCoords));
+    const point = { id: _.uniqueId(), ...pointData };
+    dispatch(addLocation(point));
   };
 
   return (
