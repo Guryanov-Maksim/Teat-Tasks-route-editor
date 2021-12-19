@@ -10,41 +10,40 @@ import 'regenerator-runtime/runtime.js'; // установил, когда до�
 import { useDispatch } from 'react-redux';
 import _ from 'lodash';
 
-import { addPlacemark, removePlacemark, addLocation } from './features/map/mapSlice.js';
+import { addPoint } from './features/map/mapSlice.js';
 
 const coordMock = {
-  'Москва, Россия': [55.75, 37.57],
-  'Ростов-на-Дону, Россия': [47.222078, 39.720358],
-  'Самара, Россия': [53.195878, 50.100202],
-  'Волгоград, Россия': [48.707067, 44.516975],
+  'Россия, Москва ': [55.75, 37.57],
+  'Россия, Ростов-на-Дону ': [47.222078, 39.720358],
+  'Россия, Самара ': [53.195878, 50.100202],
+  'Россия, Волгоград ': [48.707067, 44.516975],
 };
 
 const SendForm = ({ ymaps }) => {
   const inputRef = useRef();
   const dispatch = useDispatch();
-  const [pointData, setPointData] = useState();
+  const [newAddress, setNewAddress] = useState('');
 
   useEffect(() => {
     inputRef.current.focus();
 
     const suggest = new ymaps.SuggestView(inputRef.current);
     suggest.events.add('select', async (e) => {
-      console.log(e.originalEvent.item.displayName);
-      const name = e.originalEvent.item.displayName;
-      // const res = await ymaps.geocode(e.originalEvent.item.displayName);
-      // console.log(res.geoObjects.get(0).geometry.getCoordinates());
-      const coordinates = coordMock[e.originalEvent.item.displayName];
-      dispatch(addPlacemark(coordinates));
-      setPointData({ coordinates, name });
+      const item = e.get('item');
+      setNewAddress(item.value);
+      inputRef.current.focus();
     });
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(removePlacemark());
-    // const id = _.uniqueId();
-    const point = { id: _.uniqueId(), ...pointData };
-    dispatch(addLocation(point));
+    // const res = await ymaps.geocode(pointName);
+    // const coordinates = res.geoObjects.get(0).geometry.getCoordinates()
+    const coordinates = coordMock[newAddress];
+    const newPoint = { id: _.uniqueId(), coordinates, address: newAddress };
+    dispatch(addPoint(newPoint));
+    e.target.reset();
+    inputRef.current.focus();
   };
 
   return (

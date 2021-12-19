@@ -16,9 +16,6 @@ const reorder = (list, startIndex, endIndex) => {
 const Points = () => {
   const dispatch = useDispatch();
   const { points } = useSelector((state) => state.map);
-  // const coords = points.map(({ coordinates }) => coordinates);
-  // const [points, setPoints] = useState(initPoints);
-  // const { placemarkCoords, mapState, points } = useSelector((state) => state.map);
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -61,7 +58,7 @@ const Points = () => {
                     //   provided.draggableProps.style
                     // )}
                   >
-                    {item.name}
+                    {item.address}
                     <Button
                       data-index={index}
                       key={item.id}

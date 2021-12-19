@@ -1,9 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { bindActionCreators, createSlice } from '@reduxjs/toolkit';
 
 const moscowCoords = [55.75, 37.57];
 
 const initialState = {
-  placemarkCoords: null,
   mapState: { center: moscowCoords, zoom: 9 },
   points: [],
 };
@@ -12,20 +11,18 @@ export const counterSlice = createSlice({
   name: 'map',
   initialState,
   reducers: {
-    addPlacemark: (state, action) => {
-      state.placemarkCoords = action.payload;
-      state.mapState = { center: action.payload, zoom: 9 };
-    },
-    removePlacemark: (state) => {
-      state.placemarkCoords = null;
-    },
-    updateLocation: (state, action) => {
-      const { index, newCoords, newPointName } = action.payload;
-      state.points[index].coordinates = newCoords;
-      state.points[index].name = newPointName;
-    },
-    addLocation: (state, action) => {
+    addPoint: (state, action) => {
+      const { coordinates } = action.payload;
       state.points.push(action.payload);
+      state.mapState = { center: coordinates, zoom: 9 };
+    },
+    updatePoint: (state, action) => {
+      const { id } = action.payload;
+      state.points = state.points.map((point) => (
+        point.id === id
+          ? action.payload
+          : point
+      ));
     },
     reorderPoints: (state, action) => {
       state.points = action.payload;
@@ -38,10 +35,8 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  addPlacemark,
-  removePlacemark,
-  addLocation,
-  updateLocation,
+  addPoint,
+  updatePoint,
   reorderPoints,
   removePoint,
 } = counterSlice.actions;
