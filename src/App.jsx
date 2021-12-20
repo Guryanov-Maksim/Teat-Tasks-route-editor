@@ -3,7 +3,7 @@ import { YMaps } from 'react-yandex-maps';
 import { Provider } from 'react-redux';
 
 import store from './store.js';
-import SendForm from './SendForm.jsx';
+import PointsForm from './features/pointsFrom/PointsForm.jsx';
 import YandexMap from './features/map/Map.jsx';
 import Points from './Points.jsx';
 
@@ -17,7 +17,7 @@ const App = () => {
         apikey: '48c83221-ea67-4ada-abb6-d05f32ffa30d',
       }}
       >
-        <SendForm
+        <PointsForm
           ymapsInstance={ymapsInstance}
           placemark={placemark}
         />
