@@ -9,6 +9,7 @@ import 'regenerator-runtime/runtime.js'; // установил, когда до�
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 import { addPoint } from '../map/mapSlice.js';
 
@@ -38,6 +39,7 @@ const SendForm = ({ ymaps }) => {
   const inputRef = useRef();
   const dispatch = useDispatch();
   const pointsForm = useSelector((state) => state.pointsForm);
+  const { t } = useTranslation();
   console.log(pointsForm);
 
   const requestCoordinates = (addressForSearch, form) => {
@@ -99,15 +101,15 @@ const SendForm = ({ ymaps }) => {
               type="text"
               name="address"
               data-testid="new-message"
-              placeholder="Введите новую точку"
+              placeholder={t('pointsForm.placeholder')}
               ref={inputRef}
               readOnly={pointsForm.sendingState === 'loading'}
               isInvalid={pointsForm.sendingState === 'failed'}
             />
             <Form.Control.Feedback type="invalid" tooltip>
               {pointsForm.invalid
-                ? 'requered'
-                : 'address was not found'}
+                ? t('errors.empty')
+                : t('errors.noAddressReceived')}
             </Form.Control.Feedback>
           </Form.Group>
         </Row>

@@ -1,12 +1,12 @@
-import React from 'react';
 import { render } from 'react-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/app.scss';
 
-import App from './App.jsx';
+import init from './init.jsx';
 
-const run = () => {
-  render(<App />, document.getElementById('container'));
+const run = async () => {
+  const vdom = await init();
+  render(vdom, document.getElementById('container'));
 };
 
 run();
