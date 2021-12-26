@@ -2,9 +2,42 @@ import { bindActionCreators, createSlice } from '@reduxjs/toolkit';
 
 const moscowCoords = [55.75, 37.57];
 
+const pointsForDevelop = [
+  { id: '1', address: 'Россия, Москва', coordinates: [55.75322, 37.622513] },
+  { id: '2', address: 'Россия, Ростов-на-Дону', coordinates: [47.222078, 39.720358] },
+  { id: '3', address: 'Россия, Самара', coordinates: [53.195878, 50.100202] },
+  { id: '4', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '5', address: 'Молдова, Кишинёв, улица Святого Андрея, 28', coordinates: [47.032307, 28.832345] },
+  { id: '6', address: 'Россия, Москва', coordinates: [55.75322, 37.622513] },
+  { id: '7', address: 'Россия, Ростов-на-Дону', coordinates: [47.222078, 39.720358] },
+  { id: '8', address: 'Россия, Самара', coordinates: [53.195878, 50.100202] },
+  { id: '9', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '10', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '11', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '12', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '13', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '14', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '15', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '16', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '17', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '18', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '19', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '20', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '21', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '22', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '23', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '24', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '25', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '26', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '27', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '28', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+  { id: '29', address: 'Россия, Вологда', coordinates: [59.220501, 39.891523] },
+];
+
 const initialState = {
   mapState: { center: moscowCoords, zoom: 9 },
   points: [],
+  // points: pointsForDevelop,
 };
 
 export const counterSlice = createSlice({

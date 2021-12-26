@@ -1,7 +1,8 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, ListGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import { reorderPoints, removePoint } from './features/map/mapSlice.js';
 
@@ -16,6 +17,7 @@ const reorder = (list, startIndex, endIndex) => {
 const Points = () => {
   const dispatch = useDispatch();
   const { points } = useSelector((state) => state.map);
+  const { t } = useTranslation();
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -37,45 +39,52 @@ const Points = () => {
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable">
-        {(provided, snapshot) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            // style={getListStyle(snapshot.isDraggingOver)}
-          >
-            {points.map((item, index) => (
-              <Draggable key={item.id} draggableId={item.id} index={index}>
-              {/* // <Draggable key={`item-{i}`} draggableId={item.id} index={index}> */}
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    // style={getItemStyle(
-                    //   snapshot.isDragging,
-                    //   provided.draggableProps.style
-                    // )}
-                  >
-                    {item.address}
-                    <Button
-                      data-index={index}
-                      key={item.id}
-                      onClick={onClick}
-                      variant="primary"
-                    >
-                      X
-                    </Button>
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <h3 className="text-center">{t('points.header')}</h3>
+      <div className="h-100 overflow-auto">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, snapshot) => (
+              <ListGroup
+                variant="flush"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                // style={getListStyle(snapshot.isDraggingOver)}
+              >
+                {points.map((item, index) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided, snapshot) => (
+                      <ListGroup.Item
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className="d-flex"
+                        // style={getItemStyle(
+                        //   snapshot.isDragging,
+                        //   provided.draggableProps.style
+                        // )}
+                      >
+                        <div className="ms-2 me-auto fw-bold flex-grow-1">{item.address}</div>
+                        <Button
+                          className="align-self-center"
+                          data-index={index}
+                          key={item.id}
+                          onClick={onClick}
+                          variant="primary"
+                        >
+                          X
+                        </Button>
+                      </ListGroup.Item>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </ListGroup>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
+    </>
   );
 };
 

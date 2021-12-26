@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import {
   Form,
-  Row,
+  FloatingLabel,
   Col,
 } from 'react-bootstrap';
 import { withYMaps } from 'react-yandex-maps';
@@ -55,6 +55,8 @@ const SendForm = ({ ymaps }) => {
           }
           const coordinates = obj.geometry.getCoordinates();
           const address = obj.getAddressLine();
+          console.log(coordinates);
+          // console.log(address);
           const newPoint = { id: _.uniqueId(), coordinates, address };
           dispatch(addPoint(newPoint));
           dispatch(setSuccessfulState());
@@ -75,6 +77,12 @@ const SendForm = ({ ymaps }) => {
       // const item = e.get('item');
       inputRef.current.focus();
     });
+
+    // suggest.events.add('keydown', () => {    // не работает
+    //   // const item = e.get('item');
+    //   // inputRef.current.focus();
+    //   console.log('keydown');
+    // });
   }, []);
 
   const handleSubmit = async (event) => {
@@ -93,15 +101,16 @@ const SendForm = ({ ymaps }) => {
   };
 
   return (
-    <div className="mt-auto px-5 py-3">
+    <div className="mt-auto px-1 mb-5">
       <Form onSubmit={handleSubmit}>
-        <Row>
-          <Form.Group as={Col} sm className="position-relative">
+        <Form.Group as={Col} sm className="position-relative">
+          <FloatingLabel
+            label={t('pointsForm.placeholder')}
+          >
             <Form.Control
               type="text"
               name="address"
               data-testid="new-message"
-              placeholder={t('pointsForm.placeholder')}
               ref={inputRef}
               readOnly={pointsForm.sendingState === 'loading'}
               isInvalid={pointsForm.sendingState === 'failed'}
@@ -111,8 +120,8 @@ const SendForm = ({ ymaps }) => {
                 ? t('errors.empty')
                 : t('errors.noAddressReceived')}
             </Form.Control.Feedback>
-          </Form.Group>
-        </Row>
+          </FloatingLabel>
+        </Form.Group>
       </Form>
     </div>
   );
