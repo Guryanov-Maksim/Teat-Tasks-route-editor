@@ -15,10 +15,24 @@ const Points = ({ ymaps }) => {
         const target = e.get('target');
         const newCoords = target.geometry.getCoordinates();
         const pointId = pl.properties.get('pointId');
-        // const res = await ymaps.geocode(newCoords);
-        // console.log(res.geoObjects.get(0).getAddressLine());
-        const newAddress = 'Самара, Россия';
-        dispatch(updatePoint({ id: pointId, coordinates: newCoords, address: newAddress }));
+
+        ymaps.geocode(newCoords)
+          .then(
+            (response) => {
+              const obj = response.geoObjects.get(0);
+              if (!obj) {
+                console.error('TODO: come up with an error');
+                return;
+              }
+              const coordinates = obj.geometry.getCoordinates();
+              const address = obj.getAddressLine();
+              const newPointData = { id: pointId, coordinates, address };
+              dispatch(updatePoint(newPointData));
+            },
+            (error) => {
+              console.error(error);
+            },
+          );
       });
     }
   }, [pl]);
