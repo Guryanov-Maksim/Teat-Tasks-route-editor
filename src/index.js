@@ -14,3 +14,4 @@ run();
 // TODO
 // 1. Remove lodash
 // https://reactjs.org/docs/refs-and-the-dom.html#callback-refs - почитать
+// 2. Удалить лишнюю инфу из баллунов
