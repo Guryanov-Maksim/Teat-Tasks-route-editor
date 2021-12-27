@@ -63,7 +63,6 @@ const Points = ({ ymaps }) => {
           properties={{
             hintContent: address,
             balloonContentHeader: address,
-            balloonContentBody: "Capital of Russia",
             pointId: id,
           }}
           options={{
