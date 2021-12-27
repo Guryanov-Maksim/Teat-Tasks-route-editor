@@ -35,8 +35,8 @@ const pointsForDevelop = [
 ];
 
 const initialState = {
-  mapState: { center: moscowCoords, zoom: 9 },
   points: [],
+  newestPointBounds: [],
   // points: pointsForDevelop,
 };
 
@@ -45,9 +45,9 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
     addPoint: (state, action) => {
-      const { coordinates } = action.payload;
+      const { bounds } = action.payload;
       state.points.push(action.payload);
-      state.mapState = { center: coordinates, zoom: 9 };
+      state.newestPointBounds = bounds;
     },
     updatePoint: (state, action) => {
       const { id } = action.payload;

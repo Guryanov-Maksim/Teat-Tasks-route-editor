@@ -46,8 +46,8 @@ const SendForm = ({ ymaps }) => {
     ymaps.geocode(addressForSearch)
       .then(
         (response) => {
-          inputRef.current.focus();
           const obj = response.geoObjects.get(0);
+          const bounds = obj.properties.get('boundedBy');
           if (!obj) {
             console.log('no search results');
             dispatch(setFailedState('no search results'));
@@ -55,11 +55,10 @@ const SendForm = ({ ymaps }) => {
           }
           const coordinates = obj.geometry.getCoordinates();
           const address = obj.getAddressLine();
-          console.log(coordinates);
-          // console.log(address);
-          const newPoint = { id: _.uniqueId(), coordinates, address };
+          const newPoint = { id: _.uniqueId(), coordinates, address, bounds };
           dispatch(addPoint(newPoint));
           dispatch(setSuccessfulState());
+          inputRef.current.focus();
           form.reset();
         },
         (error) => {

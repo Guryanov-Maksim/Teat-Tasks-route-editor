@@ -12,7 +12,6 @@ import YandexMap from './features/map/Map.jsx';
 import Points from './Points.jsx';
 
 const App = () => {
-  const [ymapsInstance, setYmapsInstance] = useState(null);
   const [placemark, setPlacemark] = useState(null);
   const { t } = useTranslation();
 
@@ -29,14 +28,12 @@ const App = () => {
           <Row className="h-100 flex-nowrap pt-1">
             <Col xs={6} sm={4} md={4} className="h-100 d-flex flex-column">
               <PointsForm
-                ymapsInstance={ymapsInstance}
                 placemark={placemark}
               />
               <Points />
             </Col>
             <Col xs={12} sm={8} md={8} className="h-100">
               <YandexMap
-                setYmapsInstance={setYmapsInstance}
                 setPlacemark={setPlacemark}
               />
             </Col>

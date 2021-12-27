@@ -13,7 +13,7 @@ const Route = ({ ymapsInstance }) => {
     if (isMoreThanTwoPoints(points)) {
       ymapsInstance.setBounds(polyline.geometry.getBounds());
     }
-  }, [points]);
+  }, [points.length]);
 
   return (
     <Polyline
