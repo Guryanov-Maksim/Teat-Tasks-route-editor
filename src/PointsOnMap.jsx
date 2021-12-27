@@ -43,23 +43,7 @@ const Points = ({ ymaps }) => {
         <Placemark
           key={id}
           geometry={coordinates}
-          instanceRef={(ref) => {
-            if (ref) {
-              // setPlacemark(ref);
-              setPl(ref);
-              // ref.events.add(['dragend'], (e) => {
-              //   console.log(e);
-              //   const vertexModel = e.get('vertexModel');
-              //   const index = vertexModel._index;
-              //   const newCoords = vertexModel.geometry._coordinates;
-              //   console.log(e);
-              //   // const res = await ymaps.geocode(e.originalEvent.item.displayName);
-              // // console.log(res.geoObjects.get(0).geometry.getCoordinates());
-              //   const newPointName = 'Самара, Россия';
-              //   dispatch(updateLocation({ index, newCoords, newPointName }));
-              // });
-            }
-          }}
+          instanceRef={(ref) => ref && setPl(ref)}
           properties={{
             hintContent: address,
             balloonContentHeader: address,

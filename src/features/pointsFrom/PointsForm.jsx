@@ -20,13 +20,6 @@ import {
   setInvalidlState,
 } from './pointsFormSlice.js';
 
-// const coordMock = {
-//   'Россия, Москва ': [55.75, 37.57],
-//   'Россия, Ростов-на-Дону ': [47.222078, 39.720358],
-//   'Россия, Самара ': [53.195878, 50.100202],
-//   'Россия, Волгоград ': [48.707067, 44.516975],
-// };
-
 const validate = (address) => {
   const schema = yup
     .string()
@@ -55,7 +48,12 @@ const SendForm = ({ ymaps }) => {
           }
           const coordinates = obj.geometry.getCoordinates();
           const address = obj.getAddressLine();
-          const newPoint = { id: _.uniqueId(), coordinates, address, bounds };
+          const newPoint = {
+            id: _.uniqueId(),
+            coordinates,
+            address,
+            bounds,
+          };
           dispatch(addPoint(newPoint));
           dispatch(setSuccessfulState());
           inputRef.current.focus();
@@ -73,15 +71,8 @@ const SendForm = ({ ymaps }) => {
     const suggest = new ymaps.SuggestView(inputRef.current);
 
     suggest.events.add('select', async () => {
-      // const item = e.get('item');
       inputRef.current.focus();
     });
-
-    // suggest.events.add('keydown', () => {    // не работает
-    //   // const item = e.get('item');
-    //   // inputRef.current.focus();
-    //   console.log('keydown');
-    // });
   }, []);
 
   const handleSubmit = async (event) => {
