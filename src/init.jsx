@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 import store from './store.js';
 import { ru, errors } from './locales/index.js';
-import App from './App.jsx';
+import App from './components/App.jsx';
 
 const defaultLanguage = 'ru';
 

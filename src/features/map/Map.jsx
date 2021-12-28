@@ -3,8 +3,8 @@ import { Map } from 'react-yandex-maps';
 import { useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
 
-import PointsOnMap from '../../PointsOnMap.jsx';
-import Route from '../../Route.jsx';
+import PointsOnMap from '../../components/PointsOnMap.jsx';
+import Route from '../../components/Route.jsx';
 import { selectNewestPointBounds } from './mapSlice.js';
 
 const YandexMap = () => {

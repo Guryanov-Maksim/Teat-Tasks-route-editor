@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Placemark, withYMaps } from 'react-yandex-maps';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { updatePoint, selectPoints } from './features/map/mapSlice.js';
+import { updatePoint, selectPoints } from '../features/map/mapSlice.js';
 
 const Points = ({ ymaps }) => {
   const dispatch = useDispatch();

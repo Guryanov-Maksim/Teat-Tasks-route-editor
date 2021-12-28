@@ -7,8 +7,8 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-import PointsForm from './features/pointsFrom/PointsForm.jsx';
-import YandexMap from './features/map/Map.jsx';
+import PointsForm from '../features/pointsFrom/PointsForm.jsx';
+import YandexMap from '../features/map/Map.jsx';
 import Points from './Points.jsx';
 
 const App = () => {
