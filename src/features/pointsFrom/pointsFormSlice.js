@@ -11,6 +11,7 @@ export const pointsFormSlice = createSlice({
   initialState,
   reducers: {
     send: (state) => {
+      /* eslint-disable no-param-reassign */
       state.sendingState = 'loading';
       state.error = null;
       state.invalid = false;
@@ -29,6 +30,7 @@ export const pointsFormSlice = createSlice({
       state.sendingState = 'failed';
       state.error = null;
       state.invalid = true;
+      /* eslint-enable no-param-reassign */
     },
   },
 });

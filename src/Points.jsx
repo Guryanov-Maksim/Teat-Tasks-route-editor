@@ -44,25 +44,20 @@ const Points = () => {
       <div className="h-100 overflow-auto">
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
-            {(provided, snapshot) => (
+            {(provided) => (
               <ListGroup
                 variant="flush"
-                {...provided.droppableProps}
+                {...provided.droppableProps} // eslint-disable-line
                 ref={provided.innerRef}
-                // style={getListStyle(snapshot.isDraggingOver)}
               >
                 {points.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided, snapshot) => (
+                    {(provided) => ( // eslint-disable-line
                       <ListGroup.Item
                         ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
+                        {...provided.draggableProps} // eslint-disable-line
+                        {...provided.dragHandleProps} // eslint-disable-line
                         className="d-flex"
-                        // style={getItemStyle(
-                        //   snapshot.isDragging,
-                        //   provided.draggableProps.style
-                        // )}
                       >
                         <div className="ms-2 me-auto fw-bold flex-grow-1">{item.address}</div>
                         <Button

@@ -45,18 +45,18 @@ export const counterSlice = createSlice({
     addPoint: (state, action) => {
       const { bounds } = action.payload;
       state.points.push(action.payload);
-      state.newestPointBounds = bounds;
+      state.newestPointBounds = bounds; // eslint-disable-line no-param-reassign
     },
     updatePoint: (state, action) => {
       const { id } = action.payload;
-      state.points = state.points.map((point) => (
+      state.points = state.points.map((point) => ( // eslint-disable-line no-param-reassign
         point.id === id
           ? action.payload
           : point
       ));
     },
     reorderPoints: (state, action) => {
-      state.points = action.payload;
+      state.points = action.payload; // eslint-disable-line no-param-reassign
     },
     removePoint: (state, action) => {
       state.points.splice(action.payload, 1);
