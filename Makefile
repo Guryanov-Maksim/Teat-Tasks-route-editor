@@ -8,3 +8,6 @@ install-deps:
 
 build:
 	NODE_ENV=production npx webpack
+
+lint:
+	npx eslint . --ext js,jsx
