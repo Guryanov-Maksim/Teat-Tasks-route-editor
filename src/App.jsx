@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { YMaps } from 'react-yandex-maps';
 import {
   Container,
@@ -12,7 +12,6 @@ import YandexMap from './features/map/Map.jsx';
 import Points from './Points.jsx';
 
 const App = () => {
-  const [placemark, setPlacemark] = useState(null);
   const { t } = useTranslation();
 
   return (
@@ -27,15 +26,11 @@ const App = () => {
           {/* благодаря этому div-у перестал выпадать контент и уместился на странице */}
           <Row className="h-100 flex-nowrap pt-1">
             <Col xs={6} sm={4} md={4} className="h-100 d-flex flex-column">
-              <PointsForm
-                placemark={placemark}
-              />
+              <PointsForm />
               <Points />
             </Col>
             <Col xs={12} sm={8} md={8} className="h-100">
-              <YandexMap
-                setPlacemark={setPlacemark}
-              />
+              <YandexMap />
             </Col>
           </Row>
         </div>

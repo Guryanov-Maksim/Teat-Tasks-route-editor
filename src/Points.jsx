@@ -33,10 +33,7 @@ const Points = () => {
     dispatch(reorderPoints(items));
   };
 
-  const onClick = (e) => {
-    console.log(e.target.dataset.index);
-    dispatch(removePoint(e.target.dataset.index));
-  };
+  const onClick = (e) => dispatch(removePoint(e.target.dataset.index));
 
   return (
     <>

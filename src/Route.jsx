@@ -6,7 +6,6 @@ import { selectPointsCoordinates } from './features/map/mapSlice.js';
 
 const Route = () => {
   const pointsCoordinates = useSelector(selectPointsCoordinates);
-  console.log(pointsCoordinates);
 
   return (
     <Polyline

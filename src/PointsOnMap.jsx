@@ -7,25 +7,25 @@ import { updatePoint, selectPoints } from './features/map/mapSlice.js';
 const Points = ({ ymaps }) => {
   const dispatch = useDispatch();
   const points = useSelector(selectPoints);
-  const [pl, setPl] = useState(null);
+  const [placemarkInstance, setPlacemarkInstance] = useState(null);
 
   useEffect(() => {
-    if (pl) {
-      pl.events.add(['dragend'], async (e) => {
+    if (placemarkInstance) {
+      placemarkInstance.events.add(['dragend'], async (e) => {
         const target = e.get('target');
         const newCoords = target.geometry.getCoordinates();
-        const pointId = pl.properties.get('pointId');
+        const pointId = placemarkInstance.properties.get('pointId');
 
         ymaps.geocode(newCoords)
           .then(
             (response) => {
-              const obj = response.geoObjects.get(0);
-              if (!obj) {
+              const firstFoundObject = response.geoObjects.get(0);
+              if (!firstFoundObject) {
                 console.error('TODO: come up with an error');
                 return;
               }
-              const coordinates = obj.geometry.getCoordinates();
-              const address = obj.getAddressLine();
+              const coordinates = firstFoundObject.geometry.getCoordinates();
+              const address = firstFoundObject.getAddressLine();
               const newPointData = { id: pointId, coordinates, address };
               dispatch(updatePoint(newPointData));
             },
@@ -35,7 +35,7 @@ const Points = ({ ymaps }) => {
           );
       });
     }
-  }, [pl]);
+  }, [placemarkInstance]);
 
   return (
     <>
@@ -43,7 +43,7 @@ const Points = ({ ymaps }) => {
         <Placemark
           key={id}
           geometry={coordinates}
-          instanceRef={(ref) => ref && setPl(ref)}
+          instanceRef={(ref) => ref && setPlacemarkInstance(ref)}
           properties={{
             hintContent: address,
             balloonContentHeader: address,

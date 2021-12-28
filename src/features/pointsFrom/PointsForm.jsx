@@ -39,15 +39,15 @@ const SendForm = ({ ymaps }) => {
     ymaps.geocode(addressForSearch)
       .then(
         (response) => {
-          const obj = response.geoObjects.get(0);
-          const bounds = obj.properties.get('boundedBy');
-          if (!obj) {
+          const firstFoundObject = response.geoObjects.get(0);
+          const bounds = firstFoundObject.properties.get('boundedBy');
+          if (!firstFoundObject) {
             console.log('no search results');
             dispatch(setFailedState('no search results'));
             return;
           }
-          const coordinates = obj.geometry.getCoordinates();
-          const address = obj.getAddressLine();
+          const coordinates = firstFoundObject.geometry.getCoordinates();
+          const address = firstFoundObject.getAddressLine();
           const newPoint = {
             id: _.uniqueId(),
             coordinates,
