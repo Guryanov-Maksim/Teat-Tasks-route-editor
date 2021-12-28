@@ -21,7 +21,7 @@ const Points = ({ ymaps }) => {
             (response) => {
               const firstFoundObject = response.geoObjects.get(0);
               if (!firstFoundObject) {
-                console.error('TODO: come up with an error');
+                console.error('The location was not determined. Try again.');
                 return;
               }
               const coordinates = firstFoundObject.geometry.getCoordinates();
