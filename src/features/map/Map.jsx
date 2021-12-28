@@ -5,11 +5,12 @@ import { Card } from 'react-bootstrap';
 
 import PointsOnMap from '../../PointsOnMap.jsx';
 import Route from '../../Route.jsx';
+import { selectNewestPointBounds } from './mapSlice.js';
 
 const YandexMap = () => {
   const mapDefaultState = { center: [55.75, 37.57], zoom: 9 };
   const [ymapsInstance, setYmapsInstance] = useState();
-  const { newestPointBounds } = useSelector((state) => state.map);
+  const newestPointBounds = useSelector(selectNewestPointBounds);
 
   useEffect(() => {
     ymapsInstance?.setBounds(newestPointBounds, {

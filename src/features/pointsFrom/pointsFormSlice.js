@@ -10,7 +10,7 @@ export const pointsFormSlice = createSlice({
   name: 'pointForm',
   initialState,
   reducers: {
-    send: (state) => {
+    setLoadingState: (state) => {
       /* eslint-disable no-param-reassign */
       state.sendingState = 'loading';
       state.error = null;
@@ -37,10 +37,12 @@ export const pointsFormSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  send,
+  setLoadingState,
   setFailedState,
   setSuccessfulState,
   setInvalidlState,
 } = pointsFormSlice.actions;
 
 export default pointsFormSlice.reducer;
+
+export const selectFormState = (state) => state.pointsForm;

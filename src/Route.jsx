@@ -2,9 +2,11 @@ import React from 'react';
 import { Polyline } from 'react-yandex-maps';
 import { useSelector } from 'react-redux';
 
+import { selectPointsCoordinates } from './features/map/mapSlice.js';
+
 const Route = () => {
-  const { points } = useSelector((state) => state.map);
-  const pointsCoordinates = points.map(({ coordinates }) => coordinates);
+  const pointsCoordinates = useSelector(selectPointsCoordinates);
+  console.log(pointsCoordinates);
 
   return (
     <Polyline

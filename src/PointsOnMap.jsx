@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Placemark, withYMaps } from 'react-yandex-maps';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { updatePoint } from './features/map/mapSlice.js';
+import { updatePoint, selectPoints } from './features/map/mapSlice.js';
 
 const Points = ({ ymaps }) => {
   const dispatch = useDispatch();
-  const { points } = useSelector((state) => state.map);
+  const points = useSelector(selectPoints);
   const [pl, setPl] = useState(null);
 
   useEffect(() => {

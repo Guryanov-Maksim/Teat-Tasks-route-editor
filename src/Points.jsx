@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, ListGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-import { reorderPoints, removePoint } from './features/map/mapSlice.js';
+import { reorderPoints, removePoint, selectPoints } from './features/map/mapSlice.js';
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -16,7 +16,7 @@ const reorder = (list, startIndex, endIndex) => {
 
 const Points = () => {
   const dispatch = useDispatch();
-  const { points } = useSelector((state) => state.map);
+  const points = useSelector(selectPoints);
   const { t } = useTranslation();
 
   const onDragEnd = (result) => {

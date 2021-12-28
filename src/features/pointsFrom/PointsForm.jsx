@@ -14,10 +14,11 @@ import { useTranslation } from 'react-i18next';
 import { addPoint } from '../map/mapSlice.js';
 
 import {
-  send,
+  setLoadingState,
   setFailedState,
   setSuccessfulState,
   setInvalidlState,
+  selectFormState,
 } from './pointsFormSlice.js';
 
 const validate = (address) => {
@@ -31,9 +32,8 @@ const validate = (address) => {
 const SendForm = ({ ymaps }) => {
   const inputRef = useRef();
   const dispatch = useDispatch();
-  const pointsForm = useSelector((state) => state.pointsForm);
+  const pointsForm = useSelector(selectFormState);
   const { t } = useTranslation();
-  console.log(pointsForm);
 
   const requestCoordinates = (addressForSearch, form) => {
     ymaps.geocode(addressForSearch)
@@ -77,7 +77,7 @@ const SendForm = ({ ymaps }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(send());
+    dispatch(setLoadingState());
     const formData = new FormData(event.target);
     const newAddress = formData.get('address');
     validate(newAddress)

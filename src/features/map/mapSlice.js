@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 
 // const pointsForDevelop = [
 //   { id: '1', address: 'Россия, Москва', coordinates: [55.75322, 37.622513] },
@@ -73,3 +73,12 @@ export const {
 } = counterSlice.actions;
 
 export default counterSlice.reducer;
+
+export const selectPoints = (state) => state.map.points;
+
+export const selectNewestPointBounds = (state) => state.map.newestPointBounds;
+
+export const selectPointsCoordinates = createSelector(
+  selectPoints,
+  (points) => points.map(({ coordinates }) => coordinates),
+);
