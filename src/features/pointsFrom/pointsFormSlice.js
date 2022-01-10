@@ -18,18 +18,14 @@ export const pointsFormSlice = createSlice({
     },
     setFailedState: (state, action) => {
       state.sendingState = 'failed';
-      state.error = action.payload;
+      console.log(action.payload);
+      state.error = action.payload.type;
       state.invalid = false;
     },
     setSuccessfulState: (state) => {
       state.sendingState = 'filling';
       state.error = null;
       state.invalid = false;
-    },
-    setInvalidlState: (state) => {
-      state.sendingState = 'failed';
-      state.error = null;
-      state.invalid = true;
       /* eslint-enable no-param-reassign */
     },
   },

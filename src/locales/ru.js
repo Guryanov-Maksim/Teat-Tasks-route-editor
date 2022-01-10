@@ -2,7 +2,8 @@ export default {
   translation: {
     errors: {
       empty: 'Обязательное поле',
-      noAddressReceived: 'Указанный вами адрес не найдет',
+      noAddress: 'Указанный вами адрес не найдет',
+      network: 'Ошибка сети',
     },
     points: {
       header: 'Точки маршрута',

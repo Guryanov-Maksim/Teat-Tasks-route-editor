@@ -17,7 +17,6 @@ import {
   setLoadingState,
   setFailedState,
   setSuccessfulState,
-  setInvalidlState,
   selectFormState,
 } from './pointsFormSlice.js';
 
@@ -28,6 +27,13 @@ const validate = (address) => {
     .required();
   return schema.validate(address);
 };
+
+const errorTypes = {
+  network: 'network',
+  noAddress: 'noAddress',
+};
+
+const createError = (type, error = {}) => ({ ...error, type });
 
 const SendForm = ({ ymaps }) => {
   const inputRef = useRef();
@@ -43,7 +49,8 @@ const SendForm = ({ ymaps }) => {
           const bounds = firstFoundObject.properties.get('boundedBy');
           if (!firstFoundObject) {
             console.log('no search results');
-            dispatch(setFailedState('no search results'));
+            const noAddressError = createError(errorTypes.noAddress);
+            dispatch(setFailedState(noAddressError));
             return;
           }
           const coordinates = firstFoundObject.geometry.getCoordinates();
@@ -60,7 +67,8 @@ const SendForm = ({ ymaps }) => {
           form.reset();
         },
         (error) => {
-          console.error(error);
+          const networkError = createError(errorTypes.network, error);
+          dispatch(setFailedState(networkError));
         },
       );
   };
@@ -85,8 +93,8 @@ const SendForm = ({ ymaps }) => {
         requestCoordinates(validAddress, event.target);
       })
       .catch((err) => {
-        dispatch(setInvalidlState());
-        console.error(err);
+        const emptyAddressError = createError(err.message);
+        dispatch(setFailedState(emptyAddressError));
       });
   };
 
@@ -106,9 +114,7 @@ const SendForm = ({ ymaps }) => {
               isInvalid={pointsForm.sendingState === 'failed'}
             />
             <Form.Control.Feedback type="invalid" tooltip>
-              {pointsForm.invalid
-                ? t('errors.empty')
-                : t('errors.noAddressReceived')}
+              {t(`errors.${pointsForm.error}`)}
             </Form.Control.Feedback>
           </FloatingLabel>
         </Form.Group>
