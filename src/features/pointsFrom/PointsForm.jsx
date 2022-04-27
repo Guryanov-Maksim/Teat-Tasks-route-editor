@@ -47,12 +47,6 @@ const SendForm = ({ ymaps }) => {
         (response) => {
           const firstFoundObject = response.geoObjects.get(0);
           const bounds = firstFoundObject.properties.get('boundedBy');
-          if (!firstFoundObject) {
-            console.log('no search results');
-            const noAddressError = createError(errorTypes.noAddress);
-            dispatch(setFailedState(noAddressError));
-            return;
-          }
           const coordinates = firstFoundObject.geometry.getCoordinates();
           const address = firstFoundObject.getAddressLine();
           const newPoint = {
@@ -70,7 +64,11 @@ const SendForm = ({ ymaps }) => {
           const networkError = createError(errorTypes.network, error);
           dispatch(setFailedState(networkError));
         },
-      );
+      )
+      .catch((error) => {
+        const noAddressError = createError(errorTypes.noAddress, error);
+        dispatch(setFailedState(noAddressError));
+      });
   };
 
   useEffect(() => {
