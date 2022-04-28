@@ -6,31 +6,23 @@ import { useTranslation } from 'react-i18next';
 
 import { reorderPoints, removePoint, selectPoints } from '../features/map/mapSlice.js';
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
 const Points = () => {
   const dispatch = useDispatch();
   const points = useSelector(selectPoints);
   const { t } = useTranslation();
 
-  const onDragEnd = (result) => {
-    if (!result.destination) {
+  const onDragEnd = ({ source, destination }) => {
+    if (!destination) {
       return;
     }
 
-    const items = reorder(
+    const payload = {
       points,
-      result.source.index,
-      result.destination.index,
-    );
+      startIndex: source.index,
+      endIndex: destination.index,
+    };
 
-    dispatch(reorderPoints(items));
+    dispatch(reorderPoints(payload));
   };
 
   const onClick = (e) => dispatch(removePoint(e.target.dataset.index));

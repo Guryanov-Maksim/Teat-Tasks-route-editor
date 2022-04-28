@@ -76,12 +76,12 @@ const SendForm = ({ ymaps }) => {
 
     const suggest = new ymaps.SuggestView(inputRef.current);
 
-    suggest.events.add('select', async () => {
+    suggest.events.add('select', () => {
       inputRef.current.focus();
     });
   }, []);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(setLoadingState());
     const formData = new FormData(event.target);

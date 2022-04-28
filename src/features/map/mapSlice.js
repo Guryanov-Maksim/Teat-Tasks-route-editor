@@ -56,7 +56,11 @@ export const counterSlice = createSlice({
       ));
     },
     reorderPoints: (state, action) => {
-      state.points = action.payload; // eslint-disable-line no-param-reassign
+      const { points, startIndex, endIndex } = action.payload;
+      const copiedPoints = [...points];
+      const [removed] = copiedPoints.splice(startIndex, 1);
+      copiedPoints.splice(endIndex, 0, removed);
+      state.points = copiedPoints; // eslint-disable-line no-param-reassign
     },
     removePoint: (state, action) => {
       state.points.splice(action.payload, 1);

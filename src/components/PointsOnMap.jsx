@@ -4,37 +4,39 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { updatePoint, selectPoints } from '../features/map/mapSlice.js';
 
-const Points = ({ ymaps }) => {
+const PointsOnMap = ({ ymaps }) => {
   const dispatch = useDispatch();
   const points = useSelector(selectPoints);
   const [placemarkInstance, setPlacemarkInstance] = useState(null);
 
   useEffect(() => {
-    if (placemarkInstance) {
-      placemarkInstance.events.add(['dragend'], async (e) => {
-        const target = e.get('target');
-        const newCoords = target.geometry.getCoordinates();
-        const pointId = placemarkInstance.properties.get('pointId');
-
-        ymaps.geocode(newCoords)
-          .then(
-            (response) => {
-              const firstFoundObject = response.geoObjects.get(0);
-              if (!firstFoundObject) {
-                console.error('The location was not determined. Try again.');
-                return;
-              }
-              const coordinates = firstFoundObject.geometry.getCoordinates();
-              const address = firstFoundObject.getAddressLine();
-              const newPointData = { id: pointId, coordinates, address };
-              dispatch(updatePoint(newPointData));
-            },
-            (error) => {
-              console.error(error);
-            },
-          );
-      });
+    if (!placemarkInstance) {
+      return;
     }
+    placemarkInstance.events.add(['dragend'], (e) => {
+      const target = e.get('target');
+      const newCoords = target.geometry.getCoordinates();
+      const pointId = placemarkInstance.properties.get('pointId');
+      const currentCoords = placemarkInstance.properties.get('coordinates');
+
+      ymaps.geocode(newCoords)
+        .then(
+          (response) => {
+            const firstFoundObject = response.geoObjects.get(0);
+            if (!firstFoundObject) {
+              console.error('The location was not determined. Try again.');
+              return;
+            }
+            const coordinates = firstFoundObject.geometry.getCoordinates();
+            const address = firstFoundObject.getAddressLine();
+            const newPointData = { id: pointId, coordinates, address };
+            dispatch(updatePoint(newPointData));
+          },
+          (error) => {
+            console.log('time out!!!!!!');
+          },
+        );
+    });
   }, [placemarkInstance]);
 
   return (
@@ -58,4 +60,4 @@ const Points = ({ ymaps }) => {
   );
 };
 
-export default withYMaps(Points, true, []);
+export default withYMaps(PointsOnMap, true, []);

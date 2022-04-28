@@ -14,18 +14,14 @@ export const pointsFormSlice = createSlice({
       /* eslint-disable no-param-reassign */
       state.sendingState = 'loading';
       state.error = null;
-      state.invalid = false;
     },
     setFailedState: (state, action) => {
       state.sendingState = 'failed';
-      console.log(action.payload);
       state.error = action.payload.type;
-      state.invalid = false;
     },
     setSuccessfulState: (state) => {
       state.sendingState = 'filling';
       state.error = null;
-      state.invalid = false;
       /* eslint-enable no-param-reassign */
     },
   },
