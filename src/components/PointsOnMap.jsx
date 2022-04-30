@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { updatePoint, selectPoints } from '../features/map/mapSlice.js';
 
-const PointsOnMap = ({ ymaps }) => {
+const PointsOnMap = ({ ymaps, toastApi }) => {
   const dispatch = useDispatch();
   const points = useSelector(selectPoints);
   const [placemarkInstance, setPlacemarkInstance] = useState(null);
@@ -18,6 +18,7 @@ const PointsOnMap = ({ ymaps }) => {
       const newCoords = target.geometry.getCoordinates();
       const pointId = placemarkInstance.properties.get('pointId');
       const currentCoords = placemarkInstance.properties.get('coordinates');
+      toastApi.notify(pointId);
 
       ymaps.geocode(newCoords)
         .then(
@@ -31,9 +32,12 @@ const PointsOnMap = ({ ymaps }) => {
             const address = firstFoundObject.getAddressLine();
             const newPointData = { id: pointId, coordinates, address };
             dispatch(updatePoint(newPointData));
+            toastApi.dismiss(pointId);
           },
           (error) => {
-            console.log('time out!!!!!!');
+            console.error(error);
+            placemarkInstance.geometry.setCoordinates(currentCoords);
+            toastApi.update(pointId);
           },
         );
     });
@@ -50,6 +54,7 @@ const PointsOnMap = ({ ymaps }) => {
             hintContent: address,
             balloonContentHeader: address,
             pointId: id,
+            coordinates,
           }}
           options={{
             draggable: true,

@@ -1,5 +1,6 @@
 import { render } from 'react-dom';
 import '../assets/app.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 import init from './init.jsx';
 
