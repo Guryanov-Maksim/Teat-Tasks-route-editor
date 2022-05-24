@@ -4,7 +4,8 @@ import i18n from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import * as yup from 'yup';
 
-import store from './store.js';
+// import store from './store.js';
+import configureAppStore from './store.js';
 import { ru, errors } from './locales/index.js';
 import App from './components/App.jsx';
 
@@ -24,6 +25,8 @@ export default async () => {
         ru,
       },
     });
+
+  const store = configureAppStore();
 
   return (
     <Provider store={store}>
