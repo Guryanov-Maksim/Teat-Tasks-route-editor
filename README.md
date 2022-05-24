@@ -1,8 +1,6 @@
 # Test-Tasks-route-editor
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/2d6376b9d7c5ec4728db/maintainability)](https://codeclimate.com/github/Guryanov-Maksim/Test-Tasks-route-editor/maintainability)
-
-[![Test Coverage](https://api.codeclimate.com/v1/badges/2d6376b9d7c5ec4728db/test_coverage)](https://codeclimate.com/github/Guryanov-Maksim/Test-Tasks-route-editor/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2d6376b9d7c5ec4728db/maintainability)](https://codeclimate.com/github/Guryanov-Maksim/Test-Tasks-route-editor/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/2d6376b9d7c5ec4728db/test_coverage)](https://codeclimate.com/github/Guryanov-Maksim/Test-Tasks-route-editor/test_coverage)
 
 You can start using the route editor right now by following this [link](https://test-tasks-route-editor.vercel.app/)
 
