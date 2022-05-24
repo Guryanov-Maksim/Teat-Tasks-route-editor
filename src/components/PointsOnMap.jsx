@@ -3,11 +3,14 @@ import { Placemark, withYMaps } from 'react-yandex-maps';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { updatePoint, selectPoints } from '../features/map/mapSlice.js';
+import { createToastApi } from './Toast.jsx';
 
-const PointsOnMap = ({ ymaps, toastApi }) => {
+const PointsOnMap = ({ ymaps }) => {
   const dispatch = useDispatch();
   const points = useSelector(selectPoints);
   const [placemarkInstance, setPlacemarkInstance] = useState(null);
+
+  const toastApi = createToastApi();
 
   useEffect(() => {
     if (!placemarkInstance) {

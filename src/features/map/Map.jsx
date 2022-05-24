@@ -2,39 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Map } from 'react-yandex-maps';
 import { useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
 
 import PointsOnMap from '../../components/PointsOnMap.jsx';
 import Route from '../../components/Route.jsx';
 import { selectNewestPointBounds } from './mapSlice.js';
+import { Toast } from '../../components/Toast.jsx';
 
 const YandexMap = () => {
   const mapDefaultState = { center: [55.75, 37.57], zoom: 9 };
   const [ymapsInstance, setYmapsInstance] = useState();
   const newestPointBounds = useSelector(selectNewestPointBounds);
-  const { t } = useTranslation();
-
-  const toastId = React.useRef({});
-
-  const notify = (id) => {
-    toastId.current[id] = toast(t('toast.addressSearch'), { autoClose: false });
-  };
-
-  const dismiss = (id) => toast.dismiss(toastId.current[id]);
-
-  const update = (id) => toast.update(toastId.current[id], {
-    theme: 'colored',
-    render: t('toast.searchError'),
-    type: toast.TYPE.ERROR,
-    autoClose: 5000,
-  });
-
-  const toastApi = {
-    notify,
-    dismiss,
-    update,
-  };
 
   useEffect(() => {
     ymapsInstance?.setBounds(newestPointBounds, {
@@ -52,9 +29,9 @@ const YandexMap = () => {
         modules={['geoObject.addon.editor', 'SuggestView', 'suggest', 'geocode', 'Placemark', 'Polyline', 'geoObject.addon.balloon']}
       >
         <Route />
-        <PointsOnMap toastApi={toastApi} />
+        <PointsOnMap />
       </Map>
-      <ToastContainer position="bottom-right" />
+      <Toast />
     </Card>
   );
 };
