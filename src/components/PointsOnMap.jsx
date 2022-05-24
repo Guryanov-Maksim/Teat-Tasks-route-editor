@@ -37,8 +37,7 @@ const PointsOnMap = ({ ymaps }) => {
             dispatch(updatePoint(newPointData));
             toastApi.dismiss(pointId);
           },
-          (error) => {
-            console.error(error);
+          () => {
             placemarkInstance.geometry.setCoordinates(currentCoords);
             toastApi.update(pointId);
           },
