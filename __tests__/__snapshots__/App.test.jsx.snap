@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  class="h-100 py-3 d-flex flex-column container-fluid"
+>
+  <h1
+    class="text-center mb-4"
+  >
+    Редактор маршрута
+  </h1>
+  <div
+    class="h-100 overflow-hidden"
+  >
+    <div
+      class="h-100 flex-nowrap pt-1 row"
+    >
+      <div
+        class="h-100 d-flex flex-column col-md-4 col-sm-4 col-6"
+      >
+        <div
+          class="mt-auto px-1 mb-5"
+        >
+          <form
+            class=""
+          >
+            <div
+              class="position-relative col-sm"
+            >
+              <div
+                class="form-floating"
+              >
+                <input
+                  class="form-control"
+                  data-testid="new-message"
+                  name="address"
+                  type="text"
+                />
+                <div
+                  class="invalid-tooltip"
+                >
+                  errors.null
+                </div>
+                <label>
+                  Введите новую точку
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <h3
+          class="text-center"
+        >
+          Точки маршрута
+        </h3>
+        <div
+          class="h-100 overflow-auto"
+        >
+          <div
+            class="list-group list-group-flush"
+          />
+        </div>
+      </div>
+      <div
+        class="h-100 col-md-8 col-sm-8 col-12"
+      >
+        <div
+          class="d-flex h-100 card"
+        >
+          <div
+            class="map"
+          >
+            <div
+              class="route"
+            />
+          </div>
+          <div
+            class="ToastContainer"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

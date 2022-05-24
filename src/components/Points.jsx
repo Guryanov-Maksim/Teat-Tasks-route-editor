@@ -52,6 +52,7 @@ const Points = () => {
                         <Button
                           className="align-self-center"
                           data-index={index}
+                          data-testid="removing-button"
                           key={item.id}
                           onClick={onClick}
                           variant="primary"
